@@ -1,12 +1,149 @@
-<div class="flex m-auto max-w-[1440px] justify-between pt-4">
-    <div>LOGO</div>
-    <div class="flex gap-4">
-        <a>Soluciones</a>
-        <a>Cotizacion</a>
-        <a>Nosotros</a>
+---
+const links = [
+  {
+    label: "Soluciones",
+    route: "/",
+  },
+  {
+    label: "Cotización",
+    route: "/",
+  },
+  {
+    label: "Nosotros",
+    route: "/about",
+  },
+];
+---
+
+<div class="flex m-auto max-w-[1800px] p-4 items-center justify-between">
+  <div class="flex gap-4 w-[200px] justify-end">
+    <img src="/public/logo.png" alt="" srcset="" />
+    <!-- <a
+      class="w-[250px] py-4 bg-primary hover:bg-primary-600 text-white font-semibold cursor-pointer"
+      >axessa</a
+    > -->
+  </div>
+  <div class="gap-20 hidden lg:flex">
+    {
+      links.map((link) => (
+        <a
+          href={link.route}
+          class="font-medium text-gray-600 hover:text-gray-900 cursor-pointer"
+        >
+          {link.label}
+        </a>
+      ))
+    }
+  </div>
+  <div class="hidden lg:flex gap-10">
+    <a
+      class="p-4 px-6 py-2 rounded-md bg-primary hover:bg-primary-600 text-white font-semibold cursor-pointer"
+      >Descargar</a
+    >
+    <a
+      class="p-4 px-6 py-2 rounded-md border text-primary border-primary hover:border-primary-200 hover:bg-primary-50 font-semibold cursor-pointer"
+      >Iniciar sessión</a
+    >
+  </div>
+
+  <!-- MOBILE -->
+  <button
+    id="hamButton"
+    class="lg:hidden hover:bg-gray-100 p-2 py-1 rounded-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-500"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="32"
+      height="32"
+      fill="currentColor"
+      class="bi bi-list"
+      viewBox="0 0 16 16"
+    >
+      <path
+        fill-rule="evenodd"
+        d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"
+      ></path>
+    </svg>
+  </button>
+
+  <!-- FLOATING MENU -->
+
+  <div
+    id="floatingMenu"
+    class="fixed lg:hidden top-0 left-0 h-full w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out z-50 -translate-x-full"
+  >
+    <div class="flex justify-end p-4">
+      <button
+        id="closeMenu"
+        class="lg:hidden hover:bg-gray-100 rounded-md cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-500"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          width="35"
+          height="35"
+          fill="currentColor"
+          class="bi bi-x"
+          viewBox="0 0 16 16"
+        >
+          <path
+            d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708"
+          ></path>
+        </svg>
+      </button>
     </div>
-    <div class="flex gap-4">
-        <a class="p-4 py-2 rounded-md bg-primary hover:bg-primary-600 text-white font-semibold cursor-pointer">Descargar</a>
-        <a class="p-4 py-2 rounded-md border text-primary border-primary hover:border-primary-200 hover:bg-primary-50 font-semibold cursor-pointer">Iniciar sessión</a>
+
+    <div class="px-4 py-2">
+      <ul class="space-y-4">
+        <li>
+          <a class="block py-2 px-4 rounded-md hover:bg-gray-100 font-medium"
+            >Soluciones</a
+          >
+        </li>
+        <li>
+          <a class="block py-2 px-4 rounded-md hover:bg-gray-100 font-medium"
+            >Cotización</a
+          >
+        </li>
+        <li>
+          <a class="block py-2 px-4 rounded-md hover:bg-gray-100 font-medium"
+            >Nosotros</a
+          >
+        </li>
+      </ul>
     </div>
+  </div>
+
+  <!-- OVERLAY -->
+  <div
+    id="overlay"
+    class="hidden fixed inset-0 bg-black bg-opacity-50 z-40"
+    aria-hidden="true"
+  >
+  </div>
 </div>
+
+<script>
+  const hamButton = document.getElementById("hamButton");
+  const floatingMenu = document.getElementById("floatingMenu");
+  const closeMenu = document.getElementById("closeMenu");
+  const overlay = document.getElementById("overlay");
+  overlay?.addEventListener("click", () => {
+    overlay?.classList.toggle("hidden");
+    floatingMenu?.classList.toggle("-translate-x-0");
+    floatingMenu?.classList.toggle("-translate-x-full");
+  });
+  hamButton?.addEventListener("click", () => {
+    if (floatingMenu && overlay) {
+      floatingMenu?.classList.toggle("-translate-x-full");
+      floatingMenu.classList.toggle("-translate-x-0");
+      overlay?.classList.toggle("hidden");
+    }
+  });
+  closeMenu?.addEventListener("click", () => {
+    if (floatingMenu) {
+      overlay?.classList.toggle("hidden");
+      floatingMenu?.classList.toggle("-translate-x-0");
+      floatingMenu.classList.toggle("-translate-x-full");
+    }
+  });
+</script>
